@@ -14,12 +14,45 @@ The Induction Motor Anomaly Detection dataset is a multi-sensor data collection 
 
 The Induction Motor Anomaly Detection dataset consists of several, simultaneously collected signals, such as:
 
-- 640x512 px thermal images in *workswell_wic_640* directory ([Workswell WIC 640](https://workswell-thermal-camera.com/workswell-infrared-camera-wic/))
-- 160x120 px thermal images in *flir_lepton_3_5* folder ([Flir Lepton 3.5](https://www.flir.com/products/lepton/?model=500-0771-01&vertical=microcam&segment=oem))
-- current and voltage signals with XXX Hz sampling rate
-- vibration data with 1000 Hz sampling rate ([Triaxial DeltaTron](https://www.bksv.com/en/transducers/vibration/accelerometers/ccld-iepe/4506-b-003))
-- IMU data with 100 Hz sampling rate ([LSM9DS1](https://content.arduino.cc/assets/Nano_BLE_Sense_lsm9ds1.pdf))
-- Microphone sound with XXX Hz sampling rate ([MP34DT05](https://content.arduino.cc/assets/Nano_BLE_Sense_mp34dt05-a.pdf))
+<details close>
+<summary>640x512 px thermal images in <i>workswell_wic_640</i> directory (Workswell WIC 640)</summary>
+<p align="center">
+  <img width="900" height="300" src="./README_FILES/workswell_wic_640_thermal_images.png">
+</p>
+</details>
+
+<details close>
+<summary>160x120 px thermal images in <i>flir_lepton_3_5</i> folder (Flir Lepton 3.5)</summary>
+<p align="center">
+  <img width="600" height="300" src="./README_FILES/flir_lepton_3_5_thermal_images.png">
+</p>
+</details>
+
+<details close>
+<summary>Current and voltage signals with XXX Hz sampling rate in <i>sig_*_R_U_W.tdms</i> files</summary>
+
+</details>
+
+<details close>
+<summary>Vibration data with 1000 Hz sampling rate in <i>vib_*_R_U_W.tdms</i> files (Triaxial DeltaTron)</summary>
+<p align="center">
+  <img width="800" height="600" src="./README_FILES/Triaxial_DeltaTron_acc_data.png">
+</p>
+</details>
+
+<details close>
+<summary>IMU data with 100 Hz sampling rate in <i>imu_*.cbor</i> files (LSM9DS1)</summary>
+<p align="center">
+  <img width="800" height="600" src="./README_FILES/LSM9DS1_acc_data.png">
+</p>
+</details>
+
+<details close>
+<summary>Microphone sound with 16 kHz sampling rate in <i>micro_*.json</i> files (MP34DT05)</summary>
+<p align="center">
+  <img width="800" height="600" src="./README_FILES/MP34DT05_micro_data.png">
+</p>
+</details>
 
 The dataset separates the use of different clutches and within them, experiments are split into 3 classes, according to the below description:
 - `misalignment-X-*` - where `X` means a different shift
@@ -34,10 +67,46 @@ All examinations were conducted with and without current load - in the range 0 -
 ## Extract data in Python
 
 <details close>
+<summary>Thermal images</summary>
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
+
+
+def normalize(data):
+    return (data - data.min()) / (data.max() - data.min())
+
+
+img_raw = np.asarray(Image.open(filepath), dtype=np.uint16)
+img = normalize(img_raw)
+plt.imshow(img, cmap='gray')
+```
+</details>
+
+<details close>
+<summary>LabVIEW tdms data</summary>
+
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+from nptdms import TdmsFile
+
+
+tdms_file = TdmsFile.read(filepath)
+df = tdms_file.as_dataframe()
+
+df.plot()
+```
+</details>
+
+<details close>
 <summary>IMU cbor files</summary>
 
 ```python
 import cbor2
+import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -46,6 +115,25 @@ with open(filepath, 'rb') as f:
 
 data = np.array(data['payload']['values'])
 print(data.shape)
+
+plt.plot(data)
+```
+</details>
+
+<details close>
+<summary>Microphone JSON files</summary>
+
+```python
+import json
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+with open(filepath, 'r') as f:
+    data = json.load(f)
+
+plt.plot(data['payload']['values'])
 ```
 </details>
 

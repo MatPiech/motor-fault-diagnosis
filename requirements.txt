@@ -1,0 +1,9 @@
+# --------- general --------- #
+matplotlib
+numpy
+pandas
+
+# --------- data loading --------- #
+cbor2       # encoding and decoding cbor binary files
+npTDMS      # loading LabVIEW .tdms file
+Pillow      # loading uint 16-bit thermal images
