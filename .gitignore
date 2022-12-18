@@ -436,3 +436,7 @@ CATKIN_IGNORE
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/python,ros,jupyternotebooks,c,c++,visualstudiocode,pycharm
+
+motor_anomaly/config_tree.txt
+motor_anomaly/data/*
+motor_anomaly/outputs/*
