@@ -1,0 +1,29 @@
+# --------- general --------- #
+matplotlib
+numpy
+pandas
+python-dotenv   # loading env variables from .env file
+
+# --------- data loading --------- #
+cbor2           # encoding and decoding cbor binary files
+npTDMS          # loading LabVIEW .tdms file
+Pillow          # loading uint 16-bit thermal images
+
+# --------- pytorch --------- #
+torch==1.13.0
+torchvision==0.14.0
+pytorch-lightning==1.6.3
+torchmetrics==0.8.2
+
+# --------- hydra --------- #
+hydra-core==1.2.0
+hydra-colorlog==1.2.0
+hydra-optuna-sweeper==1.2.0
+
+# --------- loggers --------- #
+neptune-client==0.16.3
+
+# --------- export --------- #
+onnx
+onnx-simplifier
+onnxruntime

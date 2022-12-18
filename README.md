@@ -1,6 +1,6 @@
-# Induction Motor Anomaly Detection
+# Squirrel Cage Motor Anomaly Detection
 
-The Induction Motor Anomaly Detection dataset is a multi-sensor data collection gathered to expand research on anomaly detection and predictive maintenance, mainly using non-invasive methods such as thermal observation or vibration measurement. In conducted research, the squirrel-cage rotor was utilized.
+The Squirrel Cage Motor Anomaly Detection dataset is a multi-sensor data collection gathered to expand research on anomaly detection and predictive maintenance, mainly using non-invasive methods such as thermal observation or vibration measurement. In conducted research, the squirrel-cage rotor was utilized.
 
 ## Sensors
 
@@ -12,7 +12,7 @@ The Induction Motor Anomaly Detection dataset is a multi-sensor data collection 
 
 ## Dataset
 
-The Induction Motor Anomaly Detection dataset consists of several, simultaneously collected signals, such as:
+The Squirrel Cage Motor Anomaly Detection dataset consists of several, simultaneously collected signals, such as:
 
 <details close>
 <summary>640x512 px thermal images in <i>workswell_wic_640</i> directory (Workswell WIC 640)</summary>
@@ -55,7 +55,7 @@ The Induction Motor Anomaly Detection dataset consists of several, simultaneousl
 </details>
 
 The dataset separates the use of different clutches and within them, experiments are split into 3 classes, according to the below description:
-- `misalignment-X-*` - where `X` means a different shift
+- `misalignment-X-*` - where `X` means a series of experiments with the same shift
 - `rotor-X-*` - where `X` means the number of broken cages in the squirrel-cage rotor
 - the other contains samples gathered during proper motor operation
 
