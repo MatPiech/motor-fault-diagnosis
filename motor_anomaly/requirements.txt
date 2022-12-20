@@ -1,8 +1,11 @@
 # --------- general --------- #
+albumentations	# image augmentations
 matplotlib
 numpy
 pandas
 python-dotenv   # loading env variables from .env file
+scikit-learn
+tabulate	# tabulate array for table pretty print
 timm            # pretrained PyTorch image models
 
 # --------- data loading --------- #
