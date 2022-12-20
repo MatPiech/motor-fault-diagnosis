@@ -33,7 +33,7 @@ trainer:
 #### MODEL ####
 model:
   _target_: src.models.classifier.Classifier
-  model_name: ResNet18
+  model_name: ResNet10t
   input_channels: 3
   classes: ["correct", "misalignment", "rotor"]
   loss_function: CrossEntropy

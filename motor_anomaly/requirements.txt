@@ -3,6 +3,7 @@ matplotlib
 numpy
 pandas
 python-dotenv   # loading env variables from .env file
+timm            # pretrained PyTorch image models
 
 # --------- data loading --------- #
 cbor2           # encoding and decoding cbor binary files
