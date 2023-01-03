@@ -9,7 +9,7 @@ experiment: null
 work_dir: ${hydra:runtime.cwd}
 
 # path to folder with data
-data_dir: ${work_dir}/data/MotorAnomaly/clutch_2
+data_dir: ${work_dir}/data/MotorAnomaly
 
 #### MODE ####
 debug_mode: True # disable loggers
@@ -25,7 +25,7 @@ trainer:
   gpus: 1
   accelerator: ${strategy}
   precision: 32
-  max_epochs: 40
+  max_epochs: 300
   resume_from_checkpoint: null
   progress_bar_refresh_rate: 1
   weights_summary: null
@@ -33,7 +33,7 @@ trainer:
 #### MODEL ####
 model:
   _target_: src.models.classifier.Classifier
-  model_name: ResNet10t
+  model_name: ResNet18
   input_channels: 3
   classes: ["correct", "misalignment", "rotor"]
   loss_function: CrossEntropy
@@ -58,45 +58,52 @@ datamodule:
   dataset_distribution:
     train:
       [
-        "current-load-0A",
-        "current-load-2A",
-        "current-load-4A",
-        "current-load-6A",
-        "misalignment-current-load-0A",
-        "misalignment-current-load-2A",
-        "misalignment-current-load-4A",
-        "misalignment-current-load-6A",
-        "misalignment-3-current-load-0A",
-        "misalignment-3-current-load-2A",
-        "misalignment-3-current-load-4A",
-        "misalignment-3-current-load-6A",
-        "rotor-1-current-load-0A-clutch-tightened",
-        "rotor-1-current-load-2A",
-        "rotor-1-current-load-6A",
-        "rotor-3-current-load-0A",
-        "rotor-3-current-load-2A",
-        "rotor-3-current-load-6A",
-        "rotor-6-current-load-0A",
-        "rotor-6-current-load-2A",
-        "rotor-6-current-load-6A",
+        "clutch_2/current-load-0A",
+        "clutch_2/current-load-2A",
+        "clutch_2/current-load-4A",
+        "clutch_2/current-load-6A",
+        "clutch_2/misalignment-current-load-0A",
+        "clutch_2/misalignment-current-load-2A",
+        "clutch_2/misalignment-current-load-4A",
+        "clutch_2/misalignment-current-load-6A",
+        "clutch_2/misalignment-3-current-load-0A",
+        "clutch_2/misalignment-3-current-load-2A",
+        "clutch_2/misalignment-3-current-load-4A",
+        "clutch_2/misalignment-3-current-load-6A",
+        "clutch_2/rotor-1-current-load-0A-clutch-tightened",
+        "clutch_2/rotor-1-current-load-2A",
+        "clutch_2/rotor-1-current-load-6A",
+        "clutch_2/rotor-3-current-load-0A",
+        "clutch_2/rotor-3-current-load-2A",
+        "clutch_2/rotor-3-current-load-6A",
+        "clutch_2/rotor-6-current-load-0A",
+        "clutch_2/rotor-6-current-load-2A",
+        "clutch_2/rotor-6-current-load-6A",
       ]
     valid:
       [
-        "current-load-0A-2",
-        "current-load-4A-2",
-        "misalignment-2-current-load-0A",
-        "misalignment-2-current-load-4A",
-        "rotor-1-current-load-0A",
-        "rotor-3-current-load-4A",
+        "clutch_2/current-load-0A-2",
+        "clutch_2/current-load-4A-2",
+        "clutch_2/misalignment-2-current-load-0A",
+        "clutch_2/misalignment-2-current-load-4A",
+        "clutch_2/rotor-1-current-load-0A",
+        "clutch_2/rotor-3-current-load-4A",
+        #"clutch_1/current-load-2A",
+        #"clutch_1/current-load-6A",
+        #"clutch_1/misalignment-current-load-2A",
+        #"clutch_1/misalignment-current-load-6A",
       ]
     test:
       [
-        "current-load-2A-2",
-        "current-load-6A-2",
-        "misalignment-2-current-load-2A",
-        "misalignment-2-current-load-6A",
-        "rotor-1-current-load-4A",
-        "rotor-6-current-load-4A",
+        "clutch_2/current-load-2A-2",
+        "clutch_2/current-load-6A-2",
+        "clutch_2/misalignment-2-current-load-2A",
+        "clutch_2/misalignment-2-current-load-6A",
+        "clutch_2/rotor-1-current-load-4A",
+        "clutch_2/rotor-6-current-load-4A",
+        #"clutch_1/start-up-current-load-0A",
+        #"clutch_1/current-load-4A",
+        #"clutch_1/misalignment-current-load-2A",
       ]
 
 #### CALLBACKS ####
@@ -115,7 +122,7 @@ callbacks:
     _target_: pytorch_lightning.callbacks.EarlyStopping
     monitor: "val_loss" # name of the logged metric which determines when model is improving
     mode: "min" # can be "max" or "min"
-    patience: 10 # how many validation epochs of not improving until training stops
+    patience: 30 # how many validation epochs of not improving until training stops
     min_delta: 0 # minimum change in the monitored metric needed to qualify as an improvement
 
 #### LOGGER ####
