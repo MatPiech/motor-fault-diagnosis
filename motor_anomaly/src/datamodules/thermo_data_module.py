@@ -22,7 +22,8 @@ class ThermoDataModule(LightningDataModule):
                  image_std: Tuple[float, float, float],
                  number_of_workers: int,
                  number_of_splits: int,
-                 current_split: int):
+                 current_split: int,
+                 ):
         super().__init__()
 
         self._data_root = Path(data_path)
@@ -34,6 +35,13 @@ class ThermoDataModule(LightningDataModule):
         self._number_of_splits = number_of_splits
         self._current_split = current_split
 
+        if self._dataset.split('.')[-1] == 'WorkswellThermoDataset':
+            self._dataset_folder = 'workswell_wic_640'
+        elif self._dataset.split('.')[-1] == 'LeptonThermoDataset':
+            self._dataset_folder = 'flir_lepton_3_5'
+        else:
+            raise ValueError('Unknown dataset')
+
         self._train_dataset = None
         self._valid_dataset = None
         self._test_dataset = None
@@ -41,7 +49,7 @@ class ThermoDataModule(LightningDataModule):
         self._transforms = A.Compose([
             # A.CenterCrop(image_size[1], image_size[0]),
             # A.PadIfNeeded(padded_image_size[1], padded_image_size[0], border_mode=cv2.BORDER_CONSTANT, value=0),
-            A.Normalize(mean=image_mean, std=image_std),
+            # A.Normalize(mean=image_mean, std=image_std),
             ToTensorV2()
         ])
 
@@ -52,23 +60,23 @@ class ThermoDataModule(LightningDataModule):
             # A.ColorJitter(brightness=0.1, contrast=0.1, hue=0.01, saturation=0.5),
             # A.ISONoise(color_shift=(0.01, 0.1)),
             # # geometry augmentations
-            # A.Affine(rotate=(-10, 10), translate_px=(-10, 10), scale=(0.9, 1.1)),
-            # A.HorizontalFlip(),
+            A.Affine(rotate=(-10, 10), translate_px=(-10, 10), scale=(0.9, 1.1)),
+            A.HorizontalFlip(),
             # # transforms
             # A.RandomCrop(image_size[1], image_size[0]),
             # A.PadIfNeeded(padded_image_size[1], padded_image_size[0], border_mode=cv2.BORDER_CONSTANT, value=0),
-            A.Normalize(mean=image_mean, std=image_std),
+            # A.Normalize(mean=image_mean, std=image_std),
             ToTensorV2()
         ])
 
     def setup(self, stage: Optional[str] = None):
-        train_split = [list((self._data_root / dir_name / 'workswell_wic_640').glob('*.png')) for dir_name in self._dataset_distribution['train']]
+        train_split = [list((self._data_root / dir_name / self._dataset_folder).glob('*.png')) for dir_name in self._dataset_distribution['train']]
         train_split = list(itertools.chain(*train_split))
 
-        valid_split = [list((self._data_root / dir_name / 'workswell_wic_640').glob('*.png')) for dir_name in self._dataset_distribution['valid']]
+        valid_split = [list((self._data_root / dir_name / self._dataset_folder).glob('*.png')) for dir_name in self._dataset_distribution['valid']]
         valid_split = list(itertools.chain(*valid_split))
 
-        test_split = [list((self._data_root / dir_name / 'workswell_wic_640').glob('*.png')) for dir_name in self._dataset_distribution['test']]
+        test_split = [list((self._data_root / dir_name / self._dataset_folder).glob('*.png')) for dir_name in self._dataset_distribution['test']]
         test_split = list(itertools.chain(*test_split))
 
         self._train_dataset: Dataset = hydra.utils.instantiate({
