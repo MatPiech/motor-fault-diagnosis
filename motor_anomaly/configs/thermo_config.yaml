@@ -45,8 +45,8 @@ model:
 datamodule:
   _target_: src.datamodules.thermo_data_module.ThermoDataModule
   data_path: ${data_dir}
-  dataset: src.datamodules.datasets.workswell_dataset.WorkswellThermoDataset
-  #dataset: src.datamodules.datasets.workswell_dataset.LeptonThermoDataset
+  # dataset: src.datamodules.datasets.workswell_dataset.WorkswellThermoDataset
+  dataset: src.datamodules.datasets.lepton_dataset.LeptonThermoDataset
   number_of_workers: 4
   batch_size: 8
   image_size: [300, 300]
