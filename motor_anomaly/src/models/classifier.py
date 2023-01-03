@@ -31,13 +31,13 @@ class Classifier(pl.LightningModule):
         if self._model_name == 'ResNet18':
             self.network = tvm.resnet18
             self.weights = tvm.ResNet18_Weights.DEFAULT
-
-            num_ftrs = self.network.fc.in_features
-            self.network.fc = torch.nn.Linear(num_ftrs, 3)
             
             self.network = self.network(
                 weights=self.weights
             )
+
+            num_ftrs = self.network.fc.in_features
+            self.network.fc = torch.nn.Linear(num_ftrs, 3)
         elif self._model_name == 'ResNet10t':
             self.network = timm.create_model('resnet10t', pretrained=True, num_classes=3)
         else:
