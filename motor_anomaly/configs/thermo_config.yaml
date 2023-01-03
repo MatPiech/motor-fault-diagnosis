@@ -33,7 +33,7 @@ trainer:
 #### MODEL ####
 model:
   _target_: src.models.classifier.Classifier
-  model_name: ResNet18
+  model_name: resnet10t
   input_channels: 3
   classes: ["correct", "misalignment", "rotor"]
   loss_function: CrossEntropy
@@ -89,11 +89,11 @@ datamodule:
         "clutch_2/misalignment-2-current-load-4A",
         "clutch_2/rotor-1-current-load-0A",
         "clutch_2/rotor-3-current-load-4A",
-        #"clutch_1/current-load-2A",
-        #"clutch_1/current-load-6A",
-        #"clutch_1/misalignment-current-load-2A",
-        #"clutch_1/misalignment-current-load-6A",
       ]
+    #"clutch_1/current-load-2A",
+    #"clutch_1/current-load-6A",
+    #"clutch_1/misalignment-current-load-2A",
+    #"clutch_1/misalignment-current-load-6A",
     test:
       [
         "clutch_2/current-load-2A-2",
@@ -102,11 +102,11 @@ datamodule:
         "clutch_2/misalignment-2-current-load-6A",
         "clutch_2/rotor-1-current-load-4A",
         "clutch_2/rotor-6-current-load-4A",
-        #"clutch_1/start-up-current-load-0A",
-        #"clutch_1/current-load-4A",
-        #"clutch_1/misalignment-current-load-2A",
       ]
 
+#"clutch_1/start-up-current-load-0A",
+#"clutch_1/current-load-4A",
+#"clutch_1/misalignment-current-load-2A",
 #### CALLBACKS ####
 callbacks:
   model_checkpoint:
