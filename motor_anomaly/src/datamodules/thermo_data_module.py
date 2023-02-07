@@ -54,16 +54,11 @@ class ThermoDataModule(LightningDataModule):
         ])
 
         self._augmentations = A.Compose([
-            # # rgb augmentations
-            # A.RandomSunFlare(),
-            # A.RandomGamma(gamma_limit=(80, 120)),
-            # A.ColorJitter(brightness=0.1, contrast=0.1, hue=0.01, saturation=0.5),
-            # A.ISONoise(color_shift=(0.01, 0.1)),
-            # # geometry augmentations
+            # geometry augmentations
             A.Affine(rotate=(-10, 10), translate_px=(-10, 10), scale=(0.9, 1.1)),
             A.HorizontalFlip(),
-            # # transforms
-            # A.RandomCrop(image_size[1], image_size[0]),
+            # transforms
+            A.RandomCrop(image_size[1], image_size[0]),
             # A.PadIfNeeded(padded_image_size[1], padded_image_size[0], border_mode=cv2.BORDER_CONSTANT, value=0),
             # A.Normalize(mean=image_mean, std=image_std),
             ToTensorV2()

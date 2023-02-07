@@ -32,7 +32,7 @@ class WorkswellThermoDataset(Dataset):
         image, frame_class = self._load_data(index)
         image = self._normalize(image)
 
-        image = np.stack([image, image, image], axis=-1)
+        #image = np.stack([image, image, image], axis=-1)
 
         transformed = self._augmentations(image=image)
         image = transformed['image']

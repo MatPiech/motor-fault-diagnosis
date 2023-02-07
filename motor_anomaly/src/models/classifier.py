@@ -28,21 +28,7 @@ class Classifier(pl.LightningModule):
         self._lr_patience = lr_patience
         self._visualize_test_images = visualize_test_images
 
-        if self._model_name == 'resnet18':
-            self.network = tvm.resnet18
-            self.weights = tvm.ResNet18_Weights.DEFAULT
-            
-            self.network = self.network(
-                weights=self.weights
-            )
-
-            num_ftrs = self.network.fc.in_features
-            self.network.fc = torch.nn.Linear(num_ftrs, 3)
-        elif self._model_name == 'resnet10t':
-            self.network = timm.create_model('resnet10t', pretrained=True, num_classes=3)
-        else:
-            raise NotImplementedError(
-                f'Unsupported model: {self._model_name}')
+        self.network = timm.create_model(self._model_name, pretrained=False, num_classes=3, in_chans=1)
 
         if loss_function == 'CrossEntropy':
             self.loss = torch.nn.CrossEntropyLoss()

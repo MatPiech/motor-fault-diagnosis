@@ -12,7 +12,7 @@ work_dir: ${hydra:runtime.cwd}
 data_dir: ${work_dir}/data/MotorAnomaly
 
 #### MODE ####
-debug_mode: True # disable loggers
+debug_mode: False # disable loggers
 eval_mode: False # skip train, require train.resume_from_checkpoint
 
 #### TRAINER ####
@@ -33,23 +33,23 @@ trainer:
 #### MODEL ####
 model:
   _target_: src.models.classifier.Classifier
-  model_name: resnet10t
-  input_channels: 3
+  model_name: lcnet_075
+  input_channels: 1
   classes: ["correct", "misalignment", "rotor"]
   loss_function: CrossEntropy
-  lr: 3e-4
-  lr_patience: 50
+  lr: 3e-5
+  lr_patience: 10
   visualize_test_images: False
 
 #### DATA ####
 datamodule:
   _target_: src.datamodules.thermo_data_module.ThermoDataModule
   data_path: ${data_dir}
-  # dataset: src.datamodules.datasets.workswell_dataset.WorkswellThermoDataset
-  dataset: src.datamodules.datasets.lepton_dataset.LeptonThermoDataset
+  dataset: src.datamodules.datasets.workswell_dataset.WorkswellThermoDataset
+  # dataset: src.datamodules.datasets.lepton_dataset.LeptonThermoDataset
   number_of_workers: 4
-  batch_size: 8
-  image_size: [300, 300]
+  batch_size: 16
+  image_size: [320, 320]
   padded_image_size: [320, 320]
   image_mean: [0.0, 0.0, 0.0]
   image_std: [1.0, 1.0, 1.0]
@@ -80,6 +80,10 @@ datamodule:
         "clutch_2/rotor-6-current-load-0A",
         "clutch_2/rotor-6-current-load-2A",
         "clutch_2/rotor-6-current-load-6A",
+        "clutch_1/start-up-current-load-0A",
+        "clutch_1/current-load-6A",
+        "clutch_1/misalignment-current-load-0A",
+        "clutch_1/misalignment-current-load-6A",
       ]
     valid:
       [
@@ -89,11 +93,9 @@ datamodule:
         "clutch_2/misalignment-2-current-load-4A",
         "clutch_2/rotor-1-current-load-0A",
         "clutch_2/rotor-3-current-load-4A",
+        "clutch_1/current-load-2A",
+        "clutch_1/misalignment-current-load-2A",
       ]
-    #"clutch_1/current-load-2A",
-    #"clutch_1/current-load-6A",
-    #"clutch_1/misalignment-current-load-2A",
-    #"clutch_1/misalignment-current-load-6A",
     test:
       [
         "clutch_2/current-load-2A-2",
@@ -102,11 +104,11 @@ datamodule:
         "clutch_2/misalignment-2-current-load-6A",
         "clutch_2/rotor-1-current-load-4A",
         "clutch_2/rotor-6-current-load-4A",
+        "clutch_1/start-up-current-load-0A-2",
+        "clutch_1/current-load-4A",
+        "clutch_1/misalignment-current-load-4A",
       ]
 
-#"clutch_1/start-up-current-load-0A",
-#"clutch_1/current-load-4A",
-#"clutch_1/misalignment-current-load-2A",
 #### CALLBACKS ####
 callbacks:
   model_checkpoint:
@@ -115,8 +117,8 @@ callbacks:
     mode: "min" # can be "max" or "min"
     save_top_k: 1 # save k best models (determined by above metric)
     save_last: False # additionally, always save model from last epoch
-    verbose: False
-    dirpath: "outputs/checkpoints/"
+    verbose: True
+    dirpath: "checkpoints/"
     filename: "epoch_{epoch:03d}"
     auto_insert_metric_name: False
   early_stopping:
