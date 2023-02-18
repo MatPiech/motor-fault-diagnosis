@@ -13,7 +13,7 @@ MAX_THERMO_VALUE = 4833
 
 
 class WorkswellThermoDataset(Dataset):
-    classes = {0: 'correct', 1: 'misalignment', 2: 'rotor'}
+    classes = {0: 'healthy', 1: 'misalignment', 2: 'broken rotor'}
     folder_name = 'workswell_wic_640'
 
     def __init__(

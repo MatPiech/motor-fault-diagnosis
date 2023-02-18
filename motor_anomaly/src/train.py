@@ -1,8 +1,6 @@
 from typing import List, Optional
 
 import numpy as np
-from sklearn import metrics
-from tabulate import tabulate
 import hydra
 import onnx
 import timm.data
@@ -12,47 +10,9 @@ from onnxsim import simplify
 from pytorch_lightning import Callback, LightningDataModule, LightningModule, Trainer, seed_everything
 from pytorch_lightning.loggers import LightningLoggerBase
 
-from src.utils import utils
+from src.utils import utils, eval_utils
 
 log = utils.get_logger(__name__)
-
-
-def print_metrics(y_true, y_pred, class_mapping):
-    total_predictions = [0, 0, 0]
-    total_true = [0, 0, 0]
-
-    cm = metrics.confusion_matrix(y_true, y_pred, labels=class_mapping)
-
-    for i in range(3):
-        for j in range(3):
-            total_predictions[i] += cm[j][i]
-            total_true[i] += cm[i][j]
-
-    # recall and precision for each class
-    r_h = cm[0][0] / total_predictions[0]
-    r_m = cm[1][1] / total_predictions[1]
-    r_r = cm[2][2] / total_predictions[2]
-    p_h = cm[0][0] / total_true[0]
-    p_m = cm[1][1] / total_true[1]
-    p_r = cm[2][2] / total_true[2]
-
-    # data for confusion matrix
-    data = [["", class_mapping[0], class_mapping[1], class_mapping[2], "total"],
-            [class_mapping[0], cm[0][0], cm[0][1], cm[0][2], total_true[0]],
-            [class_mapping[1], cm[1][0], cm[1][1], cm[1][2], total_true[1]],
-            [class_mapping[2], cm[2][0], cm[2][1], cm[2][2], total_true[2]],
-            ["Total predicted:", total_predictions[0], total_predictions[1], total_predictions[2], sum(total_true)]]
-
-    metrics_data = [
-        ["", class_mapping[0], class_mapping[1], class_mapping[2],],
-        ["F1 Score", round((2 * p_h * r_h) / (p_h + r_h), 2), round((2 * p_m * r_m) / (p_m + r_m), 2), round((2 * p_r * r_r) / (p_r + r_r), 2)],
-        ["Recall", round(r_h, 2), round(r_m, 2), round(r_r, 2)],
-        ["Precision", round(p_h, 2), round(p_m, 2), round(p_r, 2)]
-    ]
-
-    # printing confusion matrix, f1 score, recall and precision
-    print(tabulate(data, tablefmt="simple_grid"))
-    print(tabulate(metrics_data, tablefmt="simple_grid"))
 
 
 def train(config: DictConfig) -> Optional[float]:
@@ -70,9 +30,13 @@ def train(config: DictConfig) -> Optional[float]:
 
     # Init lightning datamodule
     log.info(f'Instantiating datamodule <{config.datamodule._target_}>')
+
+    image_mean = np.array(config.datamodule.image_mean) if config.datamodule.image_mean else timm.data.IMAGENET_DEFAULT_MEAN
+    image_std = np.array(config.datamodule.image_std) if config.datamodule.image_std else timm.data.IMAGENET_DEFAULT_STD
+
     datamodule: LightningDataModule = hydra.utils.instantiate(config.datamodule,
-                                                              image_mean=timm.data.IMAGENET_DEFAULT_MEAN,
-                                                              image_std=timm.data.IMAGENET_DEFAULT_STD)
+                                                              image_mean=image_mean,
+                                                              image_std=image_std)
 
     # Init lightning model
     log.info(f'Instantiating model <{config.model._target_}>')
@@ -112,8 +76,8 @@ def train(config: DictConfig) -> Optional[float]:
     )
 
     # Train the model
-    log.info('Starting training!')
     if not config.eval_mode:
+        log.info('Starting training!')
         trainer.fit(model=model, datamodule=datamodule)
 
     # Evaluate model on test set, using the best model achieved during training
@@ -121,16 +85,16 @@ def train(config: DictConfig) -> Optional[float]:
         log.info('Starting testing!')
         if config.eval_mode:
             trainer.test(model=model, datamodule=datamodule, ckpt_path=config.trainer.resume_from_checkpoint)
+            outputs = trainer.predict(model=model, datamodule=datamodule, ckpt_path=config.trainer.resume_from_checkpoint)
         else:
             trainer.test(model=model, datamodule=datamodule, ckpt_path='best')
+            outputs = trainer.predict(model=model, datamodule=datamodule, ckpt_path='best')
 
-        class_mapping = ['healthy', 'misalignment', 'broken rotor']
+        class_mapping = config.model.classes
         y_true = []
         y_pred = []
 
-        outputs = trainer.predict(model=model, datamodule=datamodule, ckpt_path='best')
-        for o in outputs:
-            gt, pred = o
+        for (gt, pred) in outputs:
             pred = torch.argmax(pred, dim=1)
 
             y_true.append(gt.numpy())
@@ -139,7 +103,7 @@ def train(config: DictConfig) -> Optional[float]:
         y_true = [class_mapping[idx] for idx in np.hstack(y_true).tolist()]
         y_pred = [class_mapping[idx] for idx in np.hstack(y_pred).tolist()]
 
-        print_metrics(y_true, y_pred, class_mapping)
+        eval_utils.calculate_metrics_per_class(y_true, y_pred, class_mapping)
 
     # Make sure everything closed properly
     log.info('Finalizing!')
@@ -162,7 +126,7 @@ def train(config: DictConfig) -> Optional[float]:
         log.info(f'Export model to onnx! Params: opset={opset}, use_simplifier={use_simplifier}')
 
         model.eval()
-        x = next(iter(datamodule.test_dataloader()))[0]
+        x = next(iter(datamodule.test_dataloader()))[0][:1]
 
         torch.onnx.export(model.network,
                           x,  # model input (or a tuple for multiple inputs)

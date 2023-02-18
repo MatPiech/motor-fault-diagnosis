@@ -13,7 +13,7 @@ MAX_THERMO_VALUE = 31836
 
 
 class LeptonThermoDataset(Dataset):
-    classes = {0: 'correct', 1: 'misalignment'}
+    classes = {0: 'healthy', 1: 'misalignment'}
     folder_name = 'flir_lepton_3_5'
 
     def __init__(

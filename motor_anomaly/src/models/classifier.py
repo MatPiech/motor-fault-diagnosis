@@ -4,7 +4,6 @@ import pytorch_lightning as pl
 import torch
 import torch.nn.functional
 import torchmetrics
-import torchvision.models as tvm
 import timm
 
 
@@ -15,8 +14,7 @@ class Classifier(pl.LightningModule):
                  classes: List[str],
                  loss_function: str,
                  lr: float,
-                 lr_patience: int,
-                 visualize_test_images: bool
+                 lr_patience: int
                  ):
         super().__init__()
 
@@ -26,9 +24,8 @@ class Classifier(pl.LightningModule):
         self._loss_function = loss_function
         self._lr = lr
         self._lr_patience = lr_patience
-        self._visualize_test_images = visualize_test_images
 
-        self.network = timm.create_model(self._model_name, pretrained=False, num_classes=3, in_chans=1)
+        self.network = timm.create_model(self._model_name, pretrained=False, num_classes=len(self._classes), in_chans=self._input_channels)
 
         if loss_function == 'CrossEntropy':
             self.loss = torch.nn.CrossEntropyLoss()

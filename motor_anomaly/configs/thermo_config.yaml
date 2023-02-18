@@ -35,11 +35,11 @@ model:
   _target_: src.models.classifier.Classifier
   model_name: lcnet_075
   input_channels: 1
-  classes: ["correct", "misalignment", "rotor"]
+  classes: ["healthy", "misalignment", "broken rotor"]
+  # classes: ["healthy", "misalignment"]
   loss_function: CrossEntropy
   lr: 3e-5
   lr_patience: 10
-  visualize_test_images: False
 
 #### DATA ####
 datamodule:
@@ -143,7 +143,7 @@ override hydra/hydra_logging: colorlog
 override hydra/job_logging: colorlog
 
 # pretty print config at the start of the run using Rich library
-print_config: True
+print_config: False
 
 # disable python warnings if they annoy you
 ignore_warnings: True
