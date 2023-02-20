@@ -32,7 +32,7 @@ class LeptonThermoDataset(Dataset):
         image, frame_class = self._load_data(index)
         image = self._normalize(image)
 
-        image = np.stack([image, image, image], axis=-1)
+        # image = np.stack([image, image, image], axis=-1)
 
         transformed = self._augmentations(image=image)
         image = transformed['image']
@@ -46,7 +46,7 @@ class LeptonThermoDataset(Dataset):
         image_path = self._images_list[index]
 
         frame = np.asarray(Image.open(image_path), dtype=np.uint16)
-        frame = frame[20:-10, 70:] # crop only squirrel cage motor
+        frame = frame[38:-18, 78:-18] # crop only squirrel cage motor
 
         if 'misalignment' in image_path.parents[1].name:
             frame_class = 1
