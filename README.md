@@ -17,14 +17,14 @@ The Squirrel Cage Motor Anomaly Detection dataset consists of several, simultane
 <details close>
 <summary>640x512 px thermal images in <i>workswell_wic_640</i> directory (Workswell WIC 640)</summary>
 <p align="center">
-  <img width="900" height="300" src="./README_FILES/workswell_wic_640_thermal_images.png">
+  <img width="900" height="300" src="./.images/workswell_wic_640_thermal_images.png">
 </p>
 </details>
 
 <details close>
 <summary>160x120 px thermal images in <i>flir_lepton_3_5</i> folder (Flir Lepton 3.5)</summary>
 <p align="center">
-  <img width="600" height="300" src="./README_FILES/flir_lepton_3_5_thermal_images.png">
+  <img width="600" height="300" src="./.images/flir_lepton_3_5_thermal_images.png">
 </p>
 </details>
 
@@ -36,21 +36,21 @@ The Squirrel Cage Motor Anomaly Detection dataset consists of several, simultane
 <details close>
 <summary>Vibration data with 1000 Hz sampling rate in <i>vib_*_R_U_W.tdms</i> files (Triaxial DeltaTron)</summary>
 <p align="center">
-  <img width="800" height="600" src="./README_FILES/Triaxial_DeltaTron_acc_data.png">
+  <img width="800" height="600" src="./.images/Triaxial_DeltaTron_acc_data.png">
 </p>
 </details>
 
 <details close>
 <summary>IMU data with 100 Hz sampling rate in <i>imu_*.cbor</i> files (LSM9DS1)</summary>
 <p align="center">
-  <img width="800" height="600" src="./README_FILES/LSM9DS1_acc_data.png">
+  <img width="800" height="600" src="./.images/LSM9DS1_acc_data.png">
 </p>
 </details>
 
 <details close>
 <summary>Microphone sound with 16 kHz sampling rate in <i>micro_*.json</i> files (MP34DT05)</summary>
 <p align="center">
-  <img width="800" height="600" src="./README_FILES/MP34DT05_micro_data.png">
+  <img width="800" height="600" src="./.images/MP34DT05_micro_data.png">
 </p>
 </details>
 
@@ -61,7 +61,7 @@ The dataset separates the use of different clutches and within them, experiments
 
 All examinations were conducted with and without current load - in the range 0 - 6 A (`*-current-load-X`).
 
-**The collected data are open access and available at this [link](https://chmura.put.poznan.pl/s/t1VhZlh9sOdyl4Z).**
+## **The collected data have open access and are available at [chmura.put.poznan.pl](https://chmura.put.poznan.pl/s/t1VhZlh9sOdyl4Z).**
 
 
 ## Extract data in Python
