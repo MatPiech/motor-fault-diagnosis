@@ -437,7 +437,9 @@ CATKIN_IGNORE
 
 # End of https://www.toptal.com/developers/gitignore/api/python,ros,jupyternotebooks,c,c++,visualstudiocode,pycharm
 
-motor_anomaly/nepptune_exports.sh
-motor_anomaly/config_tree.txt
-motor_anomaly/data/*
-motor_anomaly/outputs/*
+motor_anomaly/thermovision/neptune_exports.sh
+motor_anomaly/thermovision/config_tree.txt
+motor_anomaly/thermovision/data/*
+motor_anomaly/thermovision/outputs/*
+motor_anomaly/thermovision/mlruns/
+motor_anomaly/notebooks/
