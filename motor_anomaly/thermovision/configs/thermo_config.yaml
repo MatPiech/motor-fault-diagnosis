@@ -1,0 +1,160 @@
+# name of the run, accessed by loggers
+name: null
+experiment: null
+
+# path to original working directory
+# hydra hijacks working directory by changing it to the current log directory,
+# so it's useful to have this path as a special variable
+# https://hydra.cc/docs/next/tutorials/basic/running_your_app/working_directory
+work_dir: ${hydra:runtime.cwd}
+
+# path to folder with data
+data_dir: ${work_dir}/data/MotorAnomaly
+
+#### MODE ####
+debug_mode: False # disable loggers
+eval_mode: False # skip train, require train.resume_from_checkpoint
+
+#### TRAINER ####
+strategy:
+  _target_: pytorch_lightning.strategies.DDPStrategy
+  find_unused_parameters: false
+
+trainer:
+  _target_: pytorch_lightning.Trainer
+  gpus: 1
+  accelerator: ${strategy}
+  precision: 32
+  max_epochs: 300
+  resume_from_checkpoint: null
+  progress_bar_refresh_rate: 1
+  weights_summary: null
+
+#### MODEL ####
+model:
+  _target_: src.models.classifier.Classifier
+  model_name: lcnet_075
+  input_channels: 1
+  classes: ["healthy", "misalignment", "broken rotor"]
+  # classes: ["healthy", "misalignment"]
+  loss_function: CrossEntropy
+  lr: 3e-5
+  lr_patience: 10
+
+#### DATA ####
+datamodule:
+  _target_: src.datamodules.thermo_data_module.ThermoDataModule
+  data_path: ${data_dir}
+  dataset: src.datamodules.datasets.workswell_dataset.WorkswellThermoDataset
+  # dataset: src.datamodules.datasets.lepton_dataset.LeptonThermoDataset
+  number_of_workers: 4
+  batch_size: 16
+  image_size: [320, 320]
+  padded_image_size: [320, 320]
+  image_mean: [0.0, 0.0, 0.0]
+  image_std: [1.0, 1.0, 1.0]
+  augment: True
+  number_of_splits: 5
+  current_split: 0
+  dataset_distribution:
+    train:
+      [
+        "clutch_2/current-load-0A",
+        "clutch_2/current-load-2A",
+        "clutch_2/current-load-4A",
+        "clutch_2/current-load-6A",
+        "clutch_2/misalignment-current-load-0A",
+        "clutch_2/misalignment-current-load-2A",
+        "clutch_2/misalignment-current-load-4A",
+        "clutch_2/misalignment-current-load-6A",
+        "clutch_2/misalignment-3-current-load-0A",
+        "clutch_2/misalignment-3-current-load-2A",
+        "clutch_2/misalignment-3-current-load-4A",
+        "clutch_2/misalignment-3-current-load-6A",
+        "clutch_2/rotor-1-current-load-0A-clutch-tightened",
+        "clutch_2/rotor-1-current-load-2A",
+        "clutch_2/rotor-1-current-load-6A",
+        "clutch_2/rotor-3-current-load-0A",
+        "clutch_2/rotor-3-current-load-2A",
+        "clutch_2/rotor-3-current-load-6A",
+        "clutch_2/rotor-6-current-load-0A",
+        "clutch_2/rotor-6-current-load-2A",
+        "clutch_2/rotor-6-current-load-6A",
+        "clutch_1/start-up-current-load-0A",
+        "clutch_1/current-load-6A",
+        "clutch_1/misalignment-current-load-0A",
+        "clutch_1/misalignment-current-load-6A",
+      ]
+    valid:
+      [
+        "clutch_2/current-load-0A-2",
+        "clutch_2/current-load-4A-2",
+        "clutch_2/misalignment-2-current-load-0A",
+        "clutch_2/misalignment-2-current-load-4A",
+        "clutch_2/rotor-1-current-load-0A",
+        "clutch_2/rotor-3-current-load-4A",
+        "clutch_1/current-load-2A",
+        "clutch_1/misalignment-current-load-2A",
+      ]
+    test:
+      [
+        "clutch_2/current-load-2A-2",
+        "clutch_2/current-load-6A-2",
+        "clutch_2/misalignment-2-current-load-2A",
+        "clutch_2/misalignment-2-current-load-6A",
+        "clutch_2/rotor-1-current-load-4A",
+        "clutch_2/rotor-6-current-load-4A",
+        "clutch_1/start-up-current-load-0A-2",
+        "clutch_1/current-load-4A",
+        "clutch_1/misalignment-current-load-4A",
+      ]
+
+#### CALLBACKS ####
+callbacks:
+  model_checkpoint:
+    _target_: pytorch_lightning.callbacks.ModelCheckpoint
+    monitor: "val_loss" # name of the logged metric which determines when model is improving
+    mode: "min" # can be "max" or "min"
+    save_top_k: 1 # save k best models (determined by above metric)
+    save_last: False # additionally, always save model from last epoch
+    verbose: True
+    dirpath: "checkpoints/"
+    filename: "epoch_{epoch:03d}"
+    auto_insert_metric_name: False
+  early_stopping:
+    _target_: pytorch_lightning.callbacks.EarlyStopping
+    monitor: "val_loss" # name of the logged metric which determines when model is improving
+    mode: "min" # can be "max" or "min"
+    patience: 30 # how many validation epochs of not improving until training stops
+    min_delta: 0 # minimum change in the monitored metric needed to qualify as an improvement
+
+#### LOGGER ####
+logger:
+  neptune:
+    _target_: pytorch_lightning.loggers.neptune.NeptuneLogger
+    api_key: ${oc.env:NEPTUNE_API_TOKEN}
+    project: ${oc.env:NEPTUNE_PROJECT_NAME}
+    name: ${name}
+
+#### OTHER ####
+
+# enable color logging
+override hydra/hydra_logging: colorlog
+override hydra/job_logging: colorlog
+
+# pretty print config at the start of the run using Rich library
+print_config: False
+
+# disable python warnings if they annoy you
+ignore_warnings: True
+
+# check performance on test set, using the best model achieved during training
+# lightning chooses best model based on metric specified in checkpoint callback
+test_after_training: True
+export:
+  export_to_onnx: False
+  opset: 15
+  use_simplifier: True
+
+# seed for random number generators in pytorch, numpy and python.random
+seed: 42
