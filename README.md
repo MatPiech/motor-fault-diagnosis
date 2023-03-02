@@ -1,6 +1,7 @@
 # Squirrel Cage Motor Anomaly Detection
 
-The Squirrel Cage Motor Anomaly Detection dataset is a multi-sensor data collection gathered to expand research on anomaly detection and predictive maintenance, mainly using non-invasive methods such as thermal observation or vibration measurement. In conducted research, the squirrel-cage rotor was utilized.
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Dataset" property="dct:title" rel="dct:type">The Squirrel Cage Induction Motor Anomaly Dataset</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+It is a multi-sensor data collection gathered to expand research on anomaly detection and predictive maintenance, mainly using non-invasive methods such as thermal observation or vibration measurement. In conducted research, the squirrel-cage rotor was utilized. Accompanying scripts and source code are licensed under a [MIT License](./LICENSE).
 
 ## Sensors
 
