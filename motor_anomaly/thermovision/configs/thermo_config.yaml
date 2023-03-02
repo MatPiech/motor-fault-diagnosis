@@ -12,7 +12,7 @@ work_dir: ${hydra:runtime.cwd}
 data_dir: ${work_dir}/data/MotorAnomaly
 
 #### MODE ####
-debug_mode: False # disable loggers
+debug_mode: True # disable loggers
 eval_mode: False # skip train, require train.resume_from_checkpoint
 
 #### TRAINER ####

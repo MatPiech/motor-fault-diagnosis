@@ -112,6 +112,6 @@ class ThermoDataModule(LightningDataModule):
 
     def predict_dataloader(self):
         return DataLoader(
-            self._test_dataset, batch_size=self._batch_size, num_workers=self._number_of_workers,
+            self._train_dataset, batch_size=self._batch_size, num_workers=self._number_of_workers,
             pin_memory=True
         )
