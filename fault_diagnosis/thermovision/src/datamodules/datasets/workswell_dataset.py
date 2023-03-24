@@ -8,7 +8,8 @@ from albumentations import Compose
 from torch.utils.data import Dataset
 
 
-MIN_THERMO_VALUE = 1799
+MIN_THERMO_VALUE = 1695 # for whole image
+#MIN_THERMO_VALUE = 1799 # for cropped image
 MAX_THERMO_VALUE = 4833
 
 
@@ -46,7 +47,7 @@ class WorkswellThermoDataset(Dataset):
         image_path = self._images_list[index]
 
         frame = np.asarray(Image.open(image_path), dtype=np.uint16)
-        frame = frame[96:-96, 320:] # crop only squirrel cage motor
+        #frame = frame[96:-96, 320:] # crop only squirrel cage motor
 
         if 'misalignment' in image_path.parents[1].name:
             frame_class = 1

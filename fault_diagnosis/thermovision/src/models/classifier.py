@@ -33,9 +33,10 @@ class Classifier(pl.LightningModule):
             raise NotImplementedError(f'Unsupported loss function: {loss_function}')
 
         metrics = torchmetrics.MetricCollection([
-            torchmetrics.F1Score(),
-            torchmetrics.Precision(),
-            torchmetrics.Recall()
+            torchmetrics.Accuracy(num_classes=len(self._classes)),
+            torchmetrics.F1Score(num_classes=len(self._classes)),
+            torchmetrics.Precision(num_classes=len(self._classes)),
+            torchmetrics.Recall(num_classes=len(self._classes))
         ])
 
         self.train_metrics = metrics.clone('train_')

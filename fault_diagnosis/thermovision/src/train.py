@@ -31,12 +31,7 @@ def train(config: DictConfig) -> Optional[float]:
     # Init lightning datamodule
     log.info(f'Instantiating datamodule <{config.datamodule._target_}>')
 
-    image_mean = np.array(config.datamodule.image_mean) if config.datamodule.image_mean else timm.data.IMAGENET_DEFAULT_MEAN
-    image_std = np.array(config.datamodule.image_std) if config.datamodule.image_std else timm.data.IMAGENET_DEFAULT_STD
-
-    datamodule: LightningDataModule = hydra.utils.instantiate(config.datamodule,
-                                                              image_mean=image_mean,
-                                                              image_std=image_std)
+    datamodule: LightningDataModule = hydra.utils.instantiate(config.datamodule)
 
     # Init lightning model
     log.info(f'Instantiating model <{config.model._target_}>')
