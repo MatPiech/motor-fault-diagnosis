@@ -15,7 +15,7 @@ Pillow          # loading uint 16-bit thermal images
 
 # --------- pytorch --------- #
 torch==1.13.1
-torchvision==0.14.0
+torchvision==0.14.1
 pytorch-lightning==1.6.3
 torchmetrics==0.8.2
 
