@@ -1,3 +1,5 @@
+log_neptune: True
+
 data_parameters:
   classes: 3
   window_length: 50

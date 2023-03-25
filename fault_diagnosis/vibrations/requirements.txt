@@ -16,3 +16,8 @@ tensorflow-addons==0.19.0
 # --------- loggers --------- #
 neptune==1.1.1
 neptune-tensorflow-keras==2.1.0
+
+# --------- hydra --------- #
+hydra-core==1.2.0
+hydra-colorlog==1.2.0
+hydra-optuna-sweeper==1.2.0
