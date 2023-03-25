@@ -1,0 +1,18 @@
+# --------- general --------- #
+matplotlib
+numpy
+pandas
+python-dotenv   # loading env variables from .env file
+scikit-learn
+
+# --------- data loading --------- #
+cbor2           # encoding and decoding cbor binary files
+npTDMS          # loading LabVIEW .tdms file
+
+# --------- tensorflow --------- #
+tensorflow==2.11.0
+tensorflow-addons==0.19.0
+
+# --------- loggers --------- #
+neptune==1.1.1
+neptune-tensorflow-keras==2.1.0

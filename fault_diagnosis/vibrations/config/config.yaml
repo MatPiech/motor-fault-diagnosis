@@ -1,0 +1,15 @@
+data_parameters:
+  classes: 3
+  window_length: 50
+  window_stride: 25
+  normalize: False
+  dataset_path: "../thermovision/data/MotorAnomaly/"
+  files_extension: "_processed.cbor"
+
+model_parameters:
+  conv_blocks: 2
+  init_filters: 4
+  kernel_size: 5
+  max_pool: True
+  batch_norm: False
+  dropout: False
