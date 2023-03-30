@@ -1,7 +1,7 @@
 # Fault Diagnosis in a Squirrel-Cage Induction Motor
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Dataset" property="dct:title" rel="dct:type">The Squirrel Cage Induction Fault Diagnosis Dataset</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
-It is a multi-sensor data collection gathered to expand research on anomaly detection, fault diagnosis, and predictive maintenance, mainly using non-invasive methods such as thermal observation or vibration measurement. Accompanying scripts and source code are licensed under a [MIT License](./LICENSE).
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br/>
+The Squirrel Cage Induction Fault Diagnosis Dataset is a multi-sensor data collection gathered to expand research on anomaly detection, fault diagnosis, and predictive maintenance, mainly using non-invasive methods such as thermal observation or vibration measurement. The measurements were gathered using advanced laboratory at Wrocław University of Science and Technology, designed to simulate and study motor defects. The collected dataset is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a> whereas accompanying scripts and source code are licensed under a [MIT License](./LICENSE).
 
 ## Sensors
 
@@ -62,7 +62,7 @@ The dataset separates the use of different clutches and within them, experiments
 
 All examinations were conducted with and without current load - in the range 0 - 6 A (`*-current-load-X`).
 
-## **The collected data have open access and are available at [chmura.put.poznan.pl](https://chmura.put.poznan.pl/s/t1VhZlh9sOdyl4Z).**
+## **The collected data have open access and are available at [chmura.put.poznan.pl](https://chmura.put.poznan.pl/s/zwn7VaVgV3FI2ER).**
 
 
 ## Extract data in Python
