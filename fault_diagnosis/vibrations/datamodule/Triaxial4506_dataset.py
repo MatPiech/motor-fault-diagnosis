@@ -1,9 +1,15 @@
 from pathlib import Path
 
-import cbor2
+from nptdms import TdmsFile
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
+
+
+SAMPLE_RATE = 2045 # Hertz
+DURATION = 15 # Seconds
+START = 5 * SAMPLE_RATE
+STOP = 20 * SAMPLE_RATE
 
 
 dataset_distribution = {
@@ -58,21 +64,19 @@ dataset_distribution = {
 }
 
 
-def extract_cbor(filepath: str) -> pd.DataFrame:
-    with open(filepath, 'rb') as f:
-        data = cbor2.decoder.load(f)
-    
-    df = pd.DataFrame(
-        data['payload']['values'], 
-        columns=['accX', 'accY', 'accZ', 'gyrX', 'gyrY', 'gyrZ', 'magX', 'magY', 'magZ']
-    )
-    df['accX'] -= 9.81
+def extract_tdms(file_path: str) -> pd.DataFrame:
+    tdms_file = TdmsFile.read(file_path)
+
+    df = tdms_file.as_dataframe()
+    df.columns = ['Time', 'Vib_a1', 'Vib_a2', 'Vib_a3']
+    df.set_index('Time', inplace=True)
+    df = df.iloc[START:STOP]
     
     return df
 
 
 def get_dataset_file_paths(dataset_path: Path, files_extension: str) -> list[Path]:
-    files = dataset_path.rglob(f'{files_extension}')
+    files = dataset_path.rglob(f'*{files_extension}')
     files = sorted(files)
     return files
 
@@ -84,7 +88,7 @@ def prepare_data(dataset_files: list[Path], window_length: int, window_stride: i
     X_test, y_test = [], []
     
     for dataset_file in dataset_files:
-        df = extract_cbor(dataset_file)
+        df = extract_tdms(dataset_file)
 
         steps = int((len(df) - window_length) / window_stride + 1)
 
@@ -112,7 +116,7 @@ def prepare_data(dataset_files: list[Path], window_length: int, window_stride: i
                 label = 0
 
         for i in range(steps):
-            a = df[['accX', 'accY', 'accZ']].iloc[i*window_stride:i*window_stride+window_length].values.flatten()
+            a = df[['Vib_a1', 'Vib_a2', 'Vib_a3']].iloc[i*window_stride:i*window_stride+window_length].values.flatten()
 
             if dataset_file.parents[1].name + '/' + dataset_file.parents[0].name in dataset_distribution['test']:
                 X_test.append(a)

@@ -2,11 +2,12 @@ log_neptune: True
 
 data_parameters:
   classes: 3
-  window_length: 50
-  window_stride: 25
+  window_length: 2000
+  window_stride: 200
   normalize: False
   dataset_path: "../thermovision/data/MotorAnomaly/"
-  files_extension: "_processed.cbor"
+  # files_extension: "*_processed.cbor"
+  files_extension: "vib_*.tdms"
 
 model_parameters:
   conv_blocks: 2
