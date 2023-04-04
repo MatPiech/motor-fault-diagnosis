@@ -48,7 +48,7 @@ class ThermoDataModule(LightningDataModule):
         self._test_dataset = None
 
         self._transforms = A.Compose([
-            A.CenterCrop(image_size[1], image_size[0]),
+            A.Resize(image_size[1], image_size[0]),
             ToTensorV2()
         ])
 
