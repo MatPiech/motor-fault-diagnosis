@@ -3,7 +3,6 @@ from typing import List, Optional
 import numpy as np
 import hydra
 import onnx
-import timm.data
 import torch
 from omegaconf import DictConfig
 from onnxsim import simplify
@@ -31,7 +30,7 @@ def train(config: DictConfig) -> Optional[float]:
     # Init lightning datamodule
     log.info(f'Instantiating datamodule <{config.datamodule._target_}>')
 
-    datamodule: LightningDataModule = hydra.utils.instantiate(config.datamodule)
+    datamodule: LightningDataModule = hydra.utils.instantiate(config.datamodule, seed=config.get('seed', 42))
 
     # Init lightning model
     log.info(f'Instantiating model <{config.model._target_}>')

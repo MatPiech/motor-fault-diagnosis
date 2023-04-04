@@ -22,6 +22,7 @@ class ThermoDataModule(LightningDataModule):
                  number_of_workers: int,
                  number_of_splits: int,
                  current_split: int,
+                 seed: int
                  ):
         super().__init__()
 
@@ -33,6 +34,7 @@ class ThermoDataModule(LightningDataModule):
         self._number_of_workers = number_of_workers
         self._number_of_splits = number_of_splits
         self._current_split = current_split
+        self._seed = seed
 
         if self._dataset.split('.')[-1] == 'WorkswellThermoDataset':
             self._dataset_folder = 'workswell_wic_640'
@@ -60,9 +62,9 @@ class ThermoDataModule(LightningDataModule):
         ])
 
     @staticmethod
-    def partition_sequences(sequences: list[str], n: int) -> list[list[str]]:
+    def partition_sequences(sequences: list[str], n: int, seed: int) -> list[list[str]]:
         sequences = sequences.copy()
-        Random(42).shuffle(sequences)
+        Random(seed).shuffle(sequences)
         return [sequences[i::n] for i in range(n)]
 
     @staticmethod
@@ -74,7 +76,7 @@ class ThermoDataModule(LightningDataModule):
         return list(itertools.chain.from_iterable(splits[:-2])), splits[-2], splits[-1]
 
     def setup(self, stage: Optional[str] = None):
-        splits = self.partition_sequences(self._dataset_distribution, self._number_of_splits)
+        splits = self.partition_sequences(self._dataset_distribution, self._number_of_splits, self._seed)
         train_split, valid_split, test_split = self.get_train_valid_test(splits, self._current_split)
 
         train_images_list = [list((self._data_root / dir_name / self._dataset_folder).glob('*.png')) for dir_name in train_split]

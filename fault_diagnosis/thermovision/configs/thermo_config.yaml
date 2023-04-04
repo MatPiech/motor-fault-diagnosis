@@ -55,15 +55,6 @@ datamodule:
   current_split: 0
   dataset_distribution:
     [
-      "clutch_1/start-up-current-load-0A",
-      "clutch_1/start-up-current-load-0A-2",
-      "clutch_1/current-load-2A",
-      "clutch_1/current-load-4A",
-      "clutch_1/current-load-6A",
-      "clutch_1/misalignment-current-load-0A",
-      "clutch_1/misalignment-current-load-2A",
-      "clutch_1/misalignment-current-load-4A",
-      "clutch_1/misalignment-current-load-6A",
       "clutch_2/current-load-0A",
       "clutch_2/current-load-2A",
       "clutch_2/current-load-4A",
@@ -97,6 +88,15 @@ datamodule:
       "clutch_2/rotor-6-current-load-2A",
       "clutch_2/rotor-6-current-load-4A",
       "clutch_2/rotor-6-current-load-6A",
+      "clutch_1/current-load-2A",
+      "clutch_1/current-load-4A",
+      "clutch_1/current-load-6A",
+      "clutch_1/start-up-current-load-0A",
+      "clutch_1/start-up-current-load-0A-2",
+      "clutch_1/misalignment-current-load-0A",
+      "clutch_1/misalignment-current-load-2A",
+      "clutch_1/misalignment-current-load-4A",
+      "clutch_1/misalignment-current-load-6A",
     ]
 
 #### CALLBACKS ####
