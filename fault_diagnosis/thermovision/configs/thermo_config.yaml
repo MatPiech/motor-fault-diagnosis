@@ -115,7 +115,7 @@ callbacks:
     _target_: pytorch_lightning.callbacks.EarlyStopping
     monitor: "val_loss" # name of the logged metric which determines when model is improving
     mode: "min" # can be "max" or "min"
-    patience: 30 # how many validation epochs of not improving until training stops
+    patience: 10 # how many validation epochs of not improving until training stops
     min_delta: 0 # minimum change in the monitored metric needed to qualify as an improvement
 
 #### LOGGER ####
