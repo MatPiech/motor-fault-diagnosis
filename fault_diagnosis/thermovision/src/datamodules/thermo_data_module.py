@@ -15,7 +15,7 @@ class ThermoDataModule(LightningDataModule):
     def __init__(self,
                  data_path: Path,
                  dataset: Dataset,
-                 dataset_distribution: Sequence[str],
+                 datasets_list: Sequence[str],
                  augment: bool,
                  batch_size: int,
                  image_size: Tuple[int, int],
@@ -28,7 +28,7 @@ class ThermoDataModule(LightningDataModule):
 
         self._data_root = Path(data_path)
         self._dataset = dataset
-        self._dataset_distribution = dataset_distribution
+        self._datasets_list = datasets_list
         self._augment = augment
         self._batch_size = batch_size
         self._number_of_workers = number_of_workers
@@ -38,8 +38,6 @@ class ThermoDataModule(LightningDataModule):
 
         if self._dataset.split('.')[-1] == 'WorkswellThermoDataset':
             self._dataset_folder = 'workswell_wic_640'
-        elif self._dataset.split('.')[-1] == 'LeptonThermoDataset':
-            self._dataset_folder = 'flir_lepton_3_5'
         else:
             raise ValueError('Unknown dataset')
 
@@ -76,7 +74,7 @@ class ThermoDataModule(LightningDataModule):
         return list(itertools.chain.from_iterable(splits[:-2])), splits[-2], splits[-1]
 
     def setup(self, stage: Optional[str] = None):
-        splits = self.partition_sequences(self._dataset_distribution, self._number_of_splits, self._seed)
+        splits = self.partition_sequences(self._datasets_list, self._number_of_splits, self._seed)
         train_split, valid_split, test_split = self.get_train_valid_test(splits, self._current_split)
 
         train_images_list = [list((self._data_root / dir_name / self._dataset_folder).glob('*.png')) for dir_name in train_split]

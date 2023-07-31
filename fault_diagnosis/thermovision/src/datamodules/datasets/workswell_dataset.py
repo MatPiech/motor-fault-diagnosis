@@ -26,19 +26,15 @@ class WorkswellThermoDataset(Dataset):
         self._augmentations = augmentations
 
     def _normalize(self, data):
-        # return (data - data.min()) / (data.max() - data.min()).astype(np.float32)
         return ((data - MIN_THERMO_VALUE) / (MAX_THERMO_VALUE - MIN_THERMO_VALUE)).astype(np.float32)
 
     def __getitem__(self, index: int) -> Tuple[torch.Tensor, torch.Tensor]:
         image, frame_class = self._load_data(index)
         image = self._normalize(image)
 
-        #image = np.stack([image, image, image], axis=-1)
-
         transformed = self._augmentations(image=image)
         image = transformed['image']
         
-        # frame_class = torch.nn.functional.one_hot(torch.tensor(frame_class), num_classes=len(self.classes))
         frame_class = torch.tensor(frame_class)
 
         return image, frame_class

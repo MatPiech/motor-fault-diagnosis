@@ -9,7 +9,7 @@ experiment: null
 work_dir: ${hydra:runtime.cwd}
 
 # path to folder with data
-data_dir: ${work_dir}/data/MotorAnomaly
+data_dir: ${work_dir}/../data/MotorAnomaly
 
 #### MODE ####
 debug_mode: False # disable loggers
@@ -46,14 +46,13 @@ datamodule:
   _target_: src.datamodules.thermo_data_module.ThermoDataModule
   data_path: ${data_dir}
   dataset: src.datamodules.datasets.workswell_dataset.WorkswellThermoDataset
-  # dataset: src.datamodules.datasets.lepton_dataset.LeptonThermoDataset
   number_of_workers: 4
   batch_size: 16
   image_size: [640, 512]
   augment: True
   number_of_splits: 5
   current_split: 0
-  dataset_distribution:
+  datasets_list:
     [
       "clutch_2/current-load-0A",
       "clutch_2/current-load-2A",
