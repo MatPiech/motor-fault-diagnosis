@@ -1,7 +1,27 @@
 # Fault Diagnosis in a Squirrel-Cage Induction Motor
 
+> This is the official repository of the paper: [*Unraveling Induction Motor State through Thermal Imaging and Edge Processing: A Step towards Explainable Fault Diagnosis*](https://ein.org.pl/Unraveling-Induction-Motor-State-through-Thermal-Imaging-and-Edge-Processing-A-Step,170114,0,2.html).
+
+
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br/>
 The Squirrel Cage Induction Fault Diagnosis Dataset is a multi-sensor data collection gathered to expand research on anomaly detection, fault diagnosis, and predictive maintenance, mainly using non-invasive methods such as thermal observation or vibration measurement. The measurements were gathered using advanced laboratory at Wrocław University of Science and Technology, designed to simulate and study motor defects. The collected dataset is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a> whereas accompanying scripts and source code are licensed under a [MIT License](./LICENSE).
+
+## Citation
+
+```
+@Article{Piechocki2023,
+  journal="Eksploatacja i Niezawodność – Maintenance and Reliability",
+  issn="1507-2711",
+  volume="25",
+  number="3",
+  year="2023",
+  title="Unraveling Induction Motor State through Thermal Imaging and Edge Processing: A Step towards Explainable Fault Diagnosis",
+  abstract="Equipment condition monitoring is essential to maintain the reliability of the electromechanical systems. Recently topics related to fault diagnosis have attracted significant interest, rapidly evolving this research area. This study presents a non-invasive method for online state classification of a squirrel-cage induction motor. The solution utilizes thermal imaging for non-contact analysis of thermal changes in machinery. Moreover, used convolutional neural networks (CNNs) streamline extracting relevant features from data and malfunction distinction without defining strict rules. A wide range of neural networks was evaluated to explore the possibilities of the proposed approach and their outputs were verified using model interpretability methods. Besides, the top-performing architectures were optimized and deployed on resource-constrained hardware to examine the system's performance in operating conditions. Overall, the completed tests have confirmed that the proposed approach is feasible, provides accurate results, and successfully operates even when deployed on edge devices.",
+  author="Piechocki, Mateusz and Pajchrowski, Tomasz and Kraft, Marek and Wolkiewicz, Marcin and Ewert, Paweł",
+  doi="10.17531/ein/170114",
+  url="https://doi.org/10.17531/ein/170114"
+}
+```
 
 ## Sensors
 
