@@ -1,15 +1,15 @@
 # source: https://github.com/ashleve/lightning-hydra-template/blob/main/src/utils/utils.py
 
 import logging
+import sys
+from typing import Sequence
+
 from omegaconf import DictConfig, OmegaConf
 import pytorch_lightning as pl
 from pytorch_lightning.utilities import rank_zero_only
 import rich.syntax
 import rich.tree
 import warnings
-
-
-from typing import List, Sequence
 
 
 def get_logger(name=__name__) -> logging.Logger:
@@ -49,7 +49,7 @@ def extras(config: DictConfig) -> None:
             "Use `python run.py mode=exp name=experiment_name`"
         )
         log.info("Exiting...")
-        exit()
+        sys.exit()
 
     # disable neptune if debug mode
     if config.get("debug_mode"):
@@ -105,7 +105,7 @@ def print_config(
 
     rich.print(tree)
 
-    with open("config_tree.txt", "w") as fp:
+    with open("config_tree.txt", "w", encoding='UTF-8') as fp:
         rich.print(tree, file=fp)
 
 
@@ -114,14 +114,7 @@ def empty(*args, **kwargs):
 
 
 @rank_zero_only
-def log_hyperparameters(
-        config: DictConfig,
-        model: pl.LightningModule,
-        datamodule: pl.LightningDataModule,
-        trainer: pl.Trainer,
-        callbacks: List[pl.Callback],
-        logger: List[pl.loggers.LightningLoggerBase],
-) -> None:
+def log_hyperparameters(config: DictConfig, model: pl.LightningModule, trainer: pl.Trainer) -> None:
     """This method controls which parameters from Hydra config are saved by Lightning loggers.
     Additionaly saves:
         - number of trainable model parameters
@@ -155,21 +148,3 @@ def log_hyperparameters(
         # this is just a trick to prevent trainer from logging hparams of model,
         # since we already did that above
         trainer.logger.log_hyperparams = empty
-
-
-def finish(
-        config: DictConfig,
-        model: pl.LightningModule,
-        datamodule: pl.LightningDataModule,
-        trainer: pl.Trainer,
-        callbacks: List[pl.Callback],
-        logger: List[pl.loggers.LightningLoggerBase],
-) -> None:
-    """Makes sure everything closed properly."""
-
-    # without this sweeps with wandb logger might crash!
-    for lg in logger:
-        if isinstance(lg, pl.loggers.wandb.WandbLogger):
-            import wandb
-
-            wandb.finish()

@@ -63,10 +63,7 @@ def train(config: DictConfig) -> Optional[float]:
     utils.log_hyperparameters(
         config=config,
         model=model,
-        datamodule=datamodule,
         trainer=trainer,
-        callbacks=callbacks,
-        logger=logger,
     )
 
     # Train the model
@@ -101,14 +98,6 @@ def train(config: DictConfig) -> Optional[float]:
 
     # Make sure everything closed properly
     log.info('Finalizing!')
-    utils.finish(
-        config=config,
-        model=model,
-        datamodule=datamodule,
-        trainer=trainer,
-        callbacks=callbacks,
-        logger=logger,
-    )
 
     # Print path to best checkpoint
     if not config.eval_mode:
@@ -141,3 +130,4 @@ def train(config: DictConfig) -> Optional[float]:
     optimized_metric = config.get('optimized_metric')
     if optimized_metric:
         return trainer.callback_metrics[optimized_metric]
+    return None
