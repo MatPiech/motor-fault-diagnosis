@@ -1,41 +1,11 @@
-# Squirrel Cage Motor Anomaly Detection
+# Fault Diagnosis in a Squirrel-Cage Induction Motor
+
+## Data
+
+The Squirrel-Cage Induction Motor Fault Diagnosis dataset is described in repository's main [README file](../README.md). Whereas the collected data are available at [chmura.put.poznan.pl](https://chmura.put.poznan.pl/s/zwn7VaVgV3FI2ER) and should be placed in the [data](./data) directory.
 
 ## Methods
 
-1. [Thermovision](./thermovision/)
-2. [Vibrations](./vibrations)
+* [thermovision](./thermovision) - source code of research paper [*Unraveling Induction Motor State through Thermal Imaging and Edge Processing: A Step towards Explainable Fault Diagnosis*](https://ein.org.pl/Unraveling-Induction-Motor-State-through-Thermal-Imaging-and-Edge-Processing-A-Step,170114,0,2.html) that covers experiments based on thermal images. The code is written in Python 3.10 and uses external libraries defined in the [requirements.txt](./thermovision/requirements.txt) file.
 
-## Dataset distibution
-
-```
-train = [
-  "clutch_2/current-load-0A", "clutch_2/current-load-2A", 
-  "clutch_2/current-load-4A", "clutch_2/current-load-6A", 
-  "clutch_2/misalignment-current-load-0A", "clutch_2/misalignment-current-load-2A",
-  "clutch_2/misalignment-current-load-4A", "clutch_2/misalignment-current-load-6A", 
-  "clutch_2/misalignment-3-current-load-0A", "clutch_2/misalignment-3-current-load-2A", 
-  "clutch_2/misalignment-3-current-load-4A", "clutch_2/misalignment-3-current-load-6A", 
-  "clutch_2/rotor-1-current-load-0A-clutch-tightened", "clutch_2/rotor-1-current-load-2A", 
-  "clutch_2/rotor-1-current-load-6A", "clutch_2/rotor-3-current-load-0A", 
-  "clutch_2/rotor-3-current-load-2A", "clutch_2/rotor-3-current-load-6A",
-  "clutch_2/rotor-6-current-load-0A", "clutch_2/rotor-6-current-load-2A", 
-  "clutch_2/rotor-6-current-load-6A", "clutch_1/start-up-current-load-0A", 
-  "clutch_1/current-load-6A", "clutch_1/misalignment-current-load-0A", 
-  "clutch_1/misalignment-current-load-6A",
-]
-
-valid = [
-  "clutch_2/current-load-0A-2", "clutch_2/current-load-4A-2",
-  "clutch_2/misalignment-2-current-load-0A", "clutch_2/misalignment-2-current-load-4A",
-  "clutch_2/rotor-1-current-load-0A", "clutch_2/rotor-3-current-load-4A",
-  "clutch_1/current-load-2A", "clutch_1/misalignment-current-load-2A",
-]
-    
-test = [
-  "clutch_2/current-load-2A-2", "clutch_2/current-load-6A-2",
-  "clutch_2/misalignment-2-current-load-2A", "clutch_2/misalignment-2-current-load-6A",
-  "clutch_2/rotor-1-current-load-4A", "clutch_2/rotor-6-current-load-4A",
-  "clutch_1/start-up-current-load-0A-2", "clutch_1/current-load-4A",
-  "clutch_1/misalignment-current-load-4A",
-]
-```
+* [vibrations](./vibrations)

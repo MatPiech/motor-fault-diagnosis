@@ -1,4 +1,4 @@
-# Squirrel Cage Motor Fault Diagnosis in Thermal Images
+# Fault Diagnosis in a Squirrel-Cage Induction Motor using Thermal Images
 
 ## Sensors & Data
 
@@ -21,23 +21,23 @@
 
 * config - available at [configs directory](./configs).
 
-* [neptune.ai](https://neptune.ai/) logging keys:
-  ```commandline
+* [neptune.ai](https://neptune.ai/) logging keys should be exported as below, otherwise disable logger in config by setting `logger: False`
+  ```shell
     export NEPTUNE_API_TOKEN=""
     export NEPTUNE_PROJECT_NAME=""
   ```
   
 * train
-  ```commandline
+  ```shell
   HYDRA_FULL_ERROR=1 python run.py --config-name thermo_config name=exp
   ```
   
 * evaluation
-  ```commandline
+  ```shell
   HYDRA_FULL_ERROR=1 python run.py --config-name thermo_config name=exp eval_mode=True trainer.resume_from_checkpoint=/home/path/to/model
   ```
 
 * model export to ONNX format
-  ```commandline
+  ```shell
   HYDRA_FULL_ERROR=1 python run.py --config-name thermo_config name=exp eval_mode=True trainer.resume_from_checkpoint=/home/path/to/model export.export_to_onnx=True
   ```
