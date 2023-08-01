@@ -4,7 +4,7 @@
 
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br/>
-The Squirrel Cage Induction Fault Diagnosis Dataset is a multi-sensor data collection gathered to expand research on anomaly detection, fault diagnosis, and predictive maintenance, mainly using non-invasive methods such as thermal observation or vibration measurement. The measurements were gathered using advanced laboratory at Wrocław University of Science and Technology, designed to simulate and study motor defects. The collected dataset is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a> whereas accompanying scripts and source code are licensed under a [MIT License](./LICENSE).
+The Squirrel Cage Induction Motor Fault Diagnosis Dataset is a multi-sensor data collection gathered to expand research on anomaly detection, fault diagnosis, and predictive maintenance, mainly using non-invasive methods such as thermal observation or vibration measurement. The measurements were gathered using advanced laboratory at Wrocław University of Science and Technology, designed to simulate and study motor defects. The collected dataset is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a> whereas accompanying scripts and source code are licensed under a [MIT License](./LICENSE).
 
 ## Citation
 
@@ -156,49 +156,4 @@ with open(filepath, 'r') as f:
 
 plt.plot(data['payload']['values'])
 ```
-</details>
-
-
-## Data acquisition
-
-**TODO:** Update this section with more details.
-
-<details close>
-<summary>Vibration, current and voltage signals</summary>
-
-Data was gathered using LabVIEW software.
-</details>
-
-<details close>
-<summary>Thermal images recording</summary>
-
-1. Run Workswell WIC node
-```console
-roslaunch workswell_wic_driver run.launch
-```
-
-2. Run node for FLIR Lepton 3.5
-```console
-roslaunch pure_thermal_driver run.launch
-```
-
-3. Record frames using the ROS rosbag tool
-```console
-rosbag record -a
-```
-
-4. Then from rosbag images were exported to PNG files.
-</details>
-
-<details close>
-<summary>Arduino Nano 33 BLE Sense (IMU and Microphone)</summary>
-
-1. Connect with Edge Impulse Deamon
-```console
-edge-impulse-daemon --clean
-```
-
-2. Select the project
-
-3. Gather data using a browser
 </details>
