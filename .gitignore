@@ -412,7 +412,7 @@ CATKIN_IGNORE
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
+.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
@@ -437,9 +437,9 @@ CATKIN_IGNORE
 
 # End of https://www.toptal.com/developers/gitignore/api/python,ros,jupyternotebooks,c,c++,visualstudiocode,pycharm
 
+fault_diagnosis/data/*
 fault_diagnosis/thermovision/neptune_exports.sh
 fault_diagnosis/thermovision/config_tree.txt
-fault_diagnosis/thermovision/data/*
 fault_diagnosis/thermovision/outputs/*
 fault_diagnosis/thermovision/mlruns/
 fault_diagnosis/notebooks/

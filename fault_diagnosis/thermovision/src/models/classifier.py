@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 import pytorch_lightning as pl
 import torch
@@ -8,14 +8,7 @@ import timm
 
 
 class Classifier(pl.LightningModule):
-    def __init__(self,
-                 model_name: str,
-                 input_channels: int,
-                 classes: List[str],
-                 loss_function: str,
-                 lr: float,
-                 lr_patience: int
-                 ):
+    def __init__(self, model_name: str, input_channels: int, classes: List[str], loss_function: str, lr: float, lr_patience: int):
         super().__init__()
 
         self._model_name = model_name
@@ -71,7 +64,7 @@ class Classifier(pl.LightningModule):
         self.log('val_loss', loss, on_step=False, on_epoch=True, sync_dist=True)
         self.log_dict(self.valid_metrics(y_pred, y))
 
-    def test_step(self, batch: torch.Tensor, batch_idx: int):
+    def test_step(self, batch: torch.Tensor, batch_idx: int) -> None:
         x, y = batch
         y_pred = self.forward(x)
 
@@ -80,7 +73,7 @@ class Classifier(pl.LightningModule):
         self.log('test_loss', loss, on_step=False, on_epoch=True, sync_dist=True)
         self.log_dict(self.test_metrics(y_pred, y))
 
-    def predict_step(self, batch: torch.Tensor, batch_idx: int, dataloader_idx: int = 0):
+    def predict_step(self, batch: torch.Tensor, batch_idx: int, dataloader_idx: int = 0) -> Tuple[torch.Tensor, torch.Tensor]:
         x, y = batch
         y_pred = self.forward(x)
 
