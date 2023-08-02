@@ -17,7 +17,7 @@
 
 ## Usage
  
-* data - images are available at [chmura.put.poznan.pl](https://chmura.put.poznan.pl/s/t1VhZlh9sOdyl4Z) in *workswell_wic_640* and *flir_lepton_3_5* directories.
+* data - images are available at at [zenodo](https://doi.org/10.5281/zenodo.8203070) and [chmura.put.poznan.pl](https://chmura.put.poznan.pl/s/zwn7VaVgV3FI2ER) in *workswell_wic_640* and *flir_lepton_3_5* directories.
 
 * config - available at [configs directory](./configs).
 

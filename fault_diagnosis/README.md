@@ -2,7 +2,7 @@
 
 ## Data
 
-The Squirrel-Cage Induction Motor Fault Diagnosis dataset is described in repository's main [README file](../README.md). Whereas the collected data are available at [chmura.put.poznan.pl](https://chmura.put.poznan.pl/s/zwn7VaVgV3FI2ER) and should be placed in the [data](./data) directory.
+The Squirrel-Cage Induction Motor Fault Diagnosis dataset is described in repository's main [README file](../README.md). Whereas the collected data are available at [zenodo](https://doi.org/10.5281/zenodo.8203070) and [chmura.put.poznan.pl](https://chmura.put.poznan.pl/s/zwn7VaVgV3FI2ER), and should be placed in a method-related _data_ directory.
 
 ## Methods
 

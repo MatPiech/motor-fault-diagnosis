@@ -9,7 +9,7 @@ experiment: null
 work_dir: ${hydra:runtime.cwd}
 
 # path to folder with data
-data_dir: ${work_dir}/../data/MotorAnomaly
+data_dir: ${work_dir}/data/thermal_images
 
 logger: True # enable loggers
 

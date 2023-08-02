@@ -33,6 +33,11 @@ The Squirrel Cage Induction Motor Fault Diagnosis Dataset is a multi-sensor data
 
 ## Dataset
 
+<a href="https://doi.org/10.5281/zenodo.8203070"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.8203070.svg" alt="DOI"></a>
+
+The collected data is publicly available under _Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License_ at [zenodo](https://doi.org/10.5281/zenodo.8203070) and [chmura.put.poznan.pl](https://chmura.put.poznan.pl/s/zwn7VaVgV3FI2ER).
+
+### Data and structure
 The Squirrel-Cage Induction Motor Fault Diagnosis dataset consists of several, simultaneously collected signals, such as:
 
 <details close>
@@ -81,8 +86,6 @@ The dataset separates the use of different clutches and within them, experiments
 - the other contains samples gathered during proper motor operation
 
 All examinations were conducted with and without current load - in the range 0 - 6 A (`*-current-load-X`).
-
-## **The collected data have open access and are available at [chmura.put.poznan.pl](https://chmura.put.poznan.pl/s/zwn7VaVgV3FI2ER).**
 
 
 ## Extract data in Python
