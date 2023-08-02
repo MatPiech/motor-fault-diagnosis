@@ -87,6 +87,10 @@ The dataset separates the use of different clutches and within them, experiments
 
 All examinations were conducted with and without current load - in the range 0 - 6 A (`*-current-load-X`).
 
+<p align="center">
+  <img width="900" src="./.images/temp_ranges.png">
+</p>
+
 
 ## Extract data in Python
 

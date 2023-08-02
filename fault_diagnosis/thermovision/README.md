@@ -41,3 +41,13 @@
   ```shell
   HYDRA_FULL_ERROR=1 python run.py --config-name thermo_config name=exp eval_mode=True trainer.resume_from_checkpoint=/home/path/to/model export.export_to_onnx=True
   ```
+
+## Results
+
+<p align="center">
+  <img width="900" src="../../.images/acc_infer_size_comparison.png">
+</p>
+
+<p align="center">
+  <img width="900" src="../../.images/captum_interpretability_models.png">
+</p>
