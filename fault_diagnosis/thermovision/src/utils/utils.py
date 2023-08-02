@@ -43,7 +43,7 @@ def extras(config: DictConfig) -> None:
         warnings.filterwarnings("ignore")
 
     # verify experiment name is set when running in experiment mode
-    if not config.get("debug_mode") and not config.get("name"):
+    if config.get("logger") and not config.get("name"):
         log.info(
             "Running in experiment mode without the experiment name specified! "
             "Use `python run.py mode=exp name=experiment_name`"
@@ -52,7 +52,7 @@ def extras(config: DictConfig) -> None:
         sys.exit()
 
     # disable neptune if debug mode
-    if config.get("debug_mode"):
+    if not config.get("logger"):
         config.logger = {}
 
     # force debugger friendly configuration if <config.trainer.fast_dev_run=True>
