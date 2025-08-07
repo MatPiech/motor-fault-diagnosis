@@ -54,17 +54,21 @@ The Squirrel-Cage Induction Motor Fault Diagnosis dataset consists of several, s
 </p>
 </details>
 
+<!---
 <details close>
 <summary>Current and voltage signals with XXX Hz sampling rate in <i>sig_*_R_U_W.tdms</i> files</summary>
 
 </details>
+--->
 
+<!---
 <details close>
 <summary>Vibration data with 1000 Hz sampling rate in <i>vib_*_R_U_W.tdms</i> files (Triaxial DeltaTron)</summary>
 <p align="center">
   <img width="800" height="600" src="./.images/Triaxial_DeltaTron_acc_data.png">
 </p>
 </details>
+--->
 
 <details close>
 <summary>IMU data with 100 Hz sampling rate in <i>imu_*.cbor</i> files (LSM9DS1)</summary>
@@ -113,6 +117,7 @@ plt.imshow(img, cmap='gray')
 ```
 </details>
 
+<!---
 <details close>
 <summary>LabVIEW tdms data</summary>
 
@@ -128,6 +133,7 @@ df = tdms_file.as_dataframe()
 df.plot()
 ```
 </details>
+--->
 
 <details close>
 <summary>IMU cbor files</summary>
